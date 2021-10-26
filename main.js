@@ -10,21 +10,21 @@ let humanScore = 0;
 let computerScore = 0;
 
 
-// COMPUTER PLAY AUTOMATICALLY
+// COMPUTER PLAY AUTOMATICALLY FUNCTION
 let computerPlay = function () {
     let comChoiceIndex = Math.floor(Math.random() * CHOICE.length);
     console.log(`Computer choice is ${CHOICE[comChoiceIndex]}`);
     return CHOICE[comChoiceIndex];
 };
 
-// PLAYER PLAY
+// PLAYER PLAY FUNCTION
 let playerPlay = function () {
     let playerChoice = prompt("Choose a choice for the game - ROCK, PAPER or SCISSORS: ").toUpperCase();
     console.log(`Player choice is ${playerChoice}`)
     return playerChoice;
 }
 
-// COMPARE RERULTS
+// COMPARE RESULTS FUNCTION
 let compareResults = function (playerChoice, computerChoice) {
     let playerPlay = playerChoice();
     let computerPlay = computerChoice();
@@ -60,6 +60,7 @@ let compareResults = function (playerChoice, computerChoice) {
     }
 }
 
+// CALCULATE SCORES FUNCTION
 let calcScore = function (results) {
     if (results === COMPUTER_WINS) {
         computerScore++;
@@ -72,13 +73,15 @@ let calcScore = function (results) {
     }
 };
 
-let game = function (getResults, calcScore) {
+// GAME FUNCTION
+let game = function (compareResults, calcScore) {
     let result = compareResults(playerPlay, computerPlay);
     calcScore(result);
     console.log(`Player's score is ${humanScore} and ${computerScore} for computer.`);
     console.log(`--------------------- END ---------------------`);
 };
 
+// GET WINNER FUNCTION
 let getWinner = function (humanScore, computerScore) {
     if (humanScore < computerScore) {
         console.log(COMPUTER_WINS);
@@ -89,6 +92,7 @@ let getWinner = function (humanScore, computerScore) {
     else console.log(`Human and computer ${DRAW}`);
 }
 
+// PLAY GAME FUNCTION
 let playGame = function () {
     game(compareResults, calcScore);
     game(compareResults, calcScore);
@@ -100,7 +104,7 @@ let playGame = function () {
 }
 
 
-// PLAY THE GAME
+// CALL THE PLAY GAME FUNCTION
 playGame();
 
 
