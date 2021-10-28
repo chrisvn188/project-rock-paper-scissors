@@ -1,6 +1,7 @@
 // Author: Chi Anh Bui
 // Created: Oct 28, 2021
 // This program is a game called Rock, Paper and Scissors.
+
 const NUMBER_OF_SHAPES = 3;
 const ROCK = "ROCK";
 const PAPER = "PAPER";
@@ -34,7 +35,6 @@ let getComputerPlay = function () {
   }
 };
 
-// A FUNCION TO GET PLAYER PLAY
 let getPlayerPlay = function () {
   let playerChoice = prompt("Enter a choice - rock, paper or scissors: ");
   if (playerChoice == null || playerChoice == false) {
@@ -76,7 +76,7 @@ let getResults = function (playerChoice, computerChoice) {
   } else return WRONG_INPUT_TEXT;
 };
 
-// A FUNCTION TO CALCULATE SCORES EACH ROUND
+// A FUNCTION TO CALCULATE SCORES AFTER COMPARING RESULTS
 let calcScore = function (results) {
   if (results === WRONG_INPUT_TEXT) {
     console.log(WRONG_INPUT_TEXT);
@@ -87,7 +87,6 @@ let calcScore = function (results) {
   }
 };
 
-// A FUNCTION TO SHOW SCORES FOR PLAYER AND COMPUTER
 let game = function (getResults, calcScore) {
   console.log(`--------------------- START ROUND ---------------------`);
   let result = getResults(getPlayerPlay, getComputerPlay);
@@ -98,7 +97,6 @@ let game = function (getResults, calcScore) {
   console.log(`--------------------- END ROUND ---------------------`);
 };
 
-// A FUNCTION TO SHOW THE WINNER
 let showWinner = function (humanScore, computerScore) {
   console.log(`--------------------- FINAL RESULT -------------------`);
   if (humanScore < computerScore) {
@@ -108,7 +106,6 @@ let showWinner = function (humanScore, computerScore) {
   } else console.log(`Human and computer ${DRAW_TEXT}`);
 };
 
-// A FUNCTION TO PLAY GAME
 let playGame = function () {
   game(getResults, calcScore);
   game(getResults, calcScore);
