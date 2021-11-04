@@ -1,14 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Permanent+Marker&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Permanent+Marker&family=Piedra&display=swap');
 :root {
-  --main-bg-cl: #202020;
+  --main-bg-cl: #2D2D3C;
   --main-text-cl: #fff;
-  --color-green: #9bf27c;
-  --color-gray: #c5c5c5;
+  --top-bar-bg-cl: #151624;
+  --color-light-gray: #E5E5E5;
   --color-dark-gray: #9a9483;
   --btn-bg-cl: #c4c4c4;
-  --main-i-cl: #242424;
+  --main-i-cl: #E35C5C;
   --focused-btn-cl: #f8f389;
+  --human-text-color:#F3F0D7;
+  --aliens-text-color:#4E9F3D;
 
   box-sizing: border-box;
   font-size: 1em;
@@ -21,108 +22,148 @@
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
-  font-family: "Permanent Marker", cursive;
+  font-family: 'Open Sans', sans-serif;
+  font-family: 'Permanent Marker', cursive;
+  font-family: 'Piedra', cursive;
   font-weight: 400;
   line-height: 1.5;
   margin: 0;
   padding: 0;
   height: 100vh;
   background-color: var(--main-bg-cl);
-  color: var(--main-text-cl);
+  color: var(--color-light-gray);
   display: flex;
   flex-direction: column;
 }
 
-.header > h1 {
+.main{
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 250px calc(100% - 500px) 250px;
+  grid-template-rows:15% 85%;
   text-align: center;
-  font-size: 2rem;
-  border-bottom: 1px solid var(--color-green);
-  margin: 0;
-  padding: 0.5em 0;
 }
 
-.main {
-  flex: 1;
+.human-text,.score-board,.aliens-text{
+  background-color: var(--top-bar-bg-cl);
+  font-size: 3rem;
   display: flex;
-  justify-content: space-between;
-  width: 80%;
-  margin: 0 auto;
+  justify-content: center;
+  align-items:center;
 }
 
-.main > section {
+.human-score,.aliens-score{
   flex: 1;
-  padding: 1em;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
 }
-
-.main > .score-area {
+.battlefield-text{
   flex: 3;
 }
 
-section > h2 {
-  margin: 0;
+.score-board{
+  padding: 0 2em;
 }
 
-.score-text {
-  color: var(--color-green);
+.human-text,.human-weapons{
+  border-right: solid 1px var(--color-light-gray);
 }
 
-.btn {
-  width: 8em;
-  height: 8em;
-  border: 1px solid var(--color-green);
+.human-text,.human-score{
+  color: var(--human-text-color);
+}
+
+.aliens-text,.aliens-score{
+  color: var(--aliens-text-color);
+}
+
+.battlefield-text{
+  color: var(--main-i-cl);
+}
+
+.aliens-text,.aliens-weapons{
+  border-left: solid 1px var(--color-light-gray);
+}
+
+.human-weapons,.aliens-weapons{
+  display: flex;
+  flex-direction:column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.battle-field{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding:0 5em;
+}
+
+.battle-field > h2{
+  font-size: 2.2rem;
+}
+
+.battle-field>p{
+  font-size: 1.1rem;
+}
+
+.human-score{
+  margin-right: auto;
+}
+.aliens-score{
+  margin-left: auto;
+}
+
+.weapons-wrapper{
+  width: 150px;
+  height: 90%;
+  /* background-color:var(--focused-btn-cl); */
   border-radius: 3px;
-  cursor: pointer;
-  background-color: var(--btn-bg-cl);
-  transition: all 1s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.focused {
-  background-color: var(--focused-btn-cl);
+.btn{
+  width: 150px;
+  height: 150px;
+  border: none;
+  transition: all .5s;
+}
+
+.focused{
   transform: scale(1.15);
 }
 
-.btn > i {
-  font-size: 4rem;
-  color: var(--main-bg-cl);
-  pointer-events: none;
+.rock{
+  background: url('https://api.iconify.design/noto/rock.svg') no-repeat center center / contain;
 }
 
-.btn:disabled > i {
-  color: var(--color-dark-gray);
+.paper{
+  background: url('https://api.iconify.design/flat-ui/paper-bag.svg') no-repeat center center / contain;
 }
 
-.score-display {
-  font-size: 5rem;
+.scissors{
+  background: url('https://api.iconify.design/noto-v1/scissors.svg') no-repeat center center / contain;
 }
 
-.hint-text {
-  font-family: sans-serif;
-  color: var(--color-gray);
-  font-style: italic;
-}
-
-.btn-play {
-  background-color: var(--color-green);
-  font-size: 1.5rem;
+.btn-play{
+  background-color: var(--main-i-cl);
+  padding:.5em 1.5em;
   border: none;
-  padding: 0.5em 1.5em;
   border-radius: 3px;
+  color: var(--color-light-gray);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  margin-top: 1.5em;
   font-family: inherit;
-}
-.btn-play:active{
-  background-color: var(--focused-btn-cl);
-  transform: translateY(-2px);
+  transition: all .3s;
 }
 
-.footer {
-  text-align: center;
-  padding: 1em 0;
-  font-family: serif;
-  color: var(--color-gray);
+.btn-play:hover{
+  transform: translateY(-3px);
+}
+
+.btn-play:active{
+  background-color: var(--aliens-text-color);
+  transform: translate(0);
 }

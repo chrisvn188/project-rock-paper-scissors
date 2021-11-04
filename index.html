@@ -5,57 +5,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <script
-      src="https://kit.fontawesome.com/e954e09d7a.js"
-      crossorigin="anonymous"
-    ></script>
     <title>Game: Rock, Paper, Scissors</title>
   </head>
   <body>
-    <header class="header">
-      <h1>ROCK - PAPER - SCISSORS</h1>
-    </header>
-
     <main class="main">
-      <section class="player-area">
-        <h2 class="human-text">Player</h2>
-        <button class="btn player-btn" data-selection="ROCK" disabled>
-          <i class="fas fa-hand-rock" aria-hidden="true"></i>
-        </button>
-        <button class="btn player-btn" data-selection="PAPER" disabled>
-          <i class="fas fa-hand-paper" aria-hidden="true"></i>
-        </button>
-        <button class="btn player-btn" data-selection="SCISSORS" disabled>
-          <i class="fas fa-hand-scissors" aria-hidden="true"></i>
-        </button>
-      </section>
-
-      <section class="score-area">
-        <h2 class="score-text">Score Board</h2>
-        <div class="score-display">0 - 0</div>
-        <p class="hint-text">Hints: Press play game button to unlock selection<br>
-            Whoever reaching to 5 points will win the game.</p>
-        <button class="btn-play">Play Game</button>
-      </section>
-
-      <section class="computer-area">
-        <h2 class="human-text">Computer</h2>
-        <button class="btn computer-btn" data-selection="ROCK" disabled>
-          <i class="fas fa-hand-rock"></i>
-        </button>
-        <button class="btn computer-btn" data-selection="PAPER" disabled>
-          <i class="fas fa-hand-paper"></i>
-        </button>
-        <button class="btn computer-btn" data-selection="SCISSORS" disabled>
-          <i class="fas fa-hand-scissors"></i>
-        </button>
-      </section>
+      <div class="human-text">Human</div>
+      <div class="score-board">
+        <div class="human-score">0</div>
+        <div class="battlefield-text">Battlefield</div>
+        <div class="aliens-score">0</div>
+      </div>
+      <div class="aliens-text">Aliens</div>
+      <div class="human-weapons">
+        <div class="weapons-wrapper">
+          <button class="btn rock h-btn" data-selection="ROCK"></button>
+          <button class="btn paper h-btn" data-selection="PAPER"></button>
+          <button class="btn scissors h-btn" data-selection="SCISSORS"></button>
+        </div>
+        
+      </div>
+      <div class="battle-field">
+        <h2 class="battle-field-text">Welcome to Rock, Paper, Scissors BattleField.<br>
+          To start, please choose any weapons on the human section to fight aliens.<br>
+          Whoever reaching to 5 points will dominate the world.<br>
+          Let's Go!!!
+        </h2>
+      </div>
+      <div class="aliens-weapons">
+        <div class="weapons-wrapper">
+          <button class="btn rock a-btn" disabled data-selection="ROCK"></button>
+          <button class="btn paper a-btn" disabled data-selection="PAPER"></button>
+          <button class="btn scissors a-btn" disabled data-selection="SCISSORS"></button>
+        </div>
+      </div>
     </main>
-
-    <footer class="footer">
-      Copyright &copy; The Odin Project - Rock, Paper, Scissors
-    </footer>
-    <audio src="sounds/tink.wav" data-selection="SOUND"></audio>
+    <audio src="sounds/tink.wav" data-sound="tink"></audio>
+    <script src="https://code.iconify.design/2/2.0.4/iconify.min.js"></script>
     <script src="main.js"></script>
   </body>
 </html>

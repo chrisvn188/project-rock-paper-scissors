@@ -4,110 +4,101 @@ let computerSelection = "";
 let playerSelection = "";
 let computerScore = 0;
 let playerScore = 0;
+let roundWinner = "";
 
-const btnPlay = document.querySelector(".btn-play");
-const playerBtns = document.querySelectorAll(".player-btn");
-const computerBtns = document.querySelectorAll(".computer-btn");
-const scoreBoard = document.querySelector(".score-display");
-const hintText = document.querySelector(".hint-text");
-const sound = document.querySelector('audio');
+const btns = document.querySelectorAll('.btn');
+const playerWeaponBtns = document.querySelectorAll(".h-btn");
+const tinkSound = document.querySelector(`audio[data-sound = "tink"]`);
+const playerScoreText = document.querySelector(".human-score");
+const computerScoreText = document.querySelector(".aliens-score");
+const battleField = document.querySelector(".battle-field");
+const battleFieldText = document.querySelector(".battle-field-text");
 
-function getComputerSelectionAutomatically() {
+function getRandomComputerSelection() {
   let randomNumber = Math.floor(Math.random() * SHAPES.length);
   switch (randomNumber) {
     case 0:
-      return "ROCK";
+      return SHAPES[0];
       break;
     case 1:
-      return "PAPER";
+      return SHAPES[1];
       break;
     case 2:
-      return "SCISSORS";
+      return SHAPES[2];
       break;
+    default:
+      console.log("Something goes wrong!!!");
   }
 }
 
-function getPlayerSelectionWhenButtonClicked(e) {
-  sound.play();
+function getPlayerSelectionEachRound(e) {
   return e.target.getAttribute("data-selection");
 }
 
-function compareResultsAndCalculateScoreEachRound(playerPlay, computerPlay) {
+function removeClassFocused(e) {
+  e.target.classList.remove("focused");
+}
+
+function findRoundWinner(playerPlay, computerPlay) {
   if (playerPlay === computerPlay) {
-    hintText.textContent = "It's a tie!";
-    return;
+    return "Oops! It's a tie";
   } else if (
     (playerPlay === "ROCK" && computerPlay === "SCISSORS") ||
     (playerPlay === "PAPER" && computerPlay === "ROCK") ||
     (playerPlay === "SCISSORS" && computerPlay === "PAPER")
   ) {
-    hintText.textContent = "You wins this round!";
     playerScore++;
+    return "Human";
   } else if (
-    (computerPlay === "ROCK" && playerPlay === "SCISSORS") ||
-    (computerPlay === "PAPER" && playerPlay === "ROCK") ||
-    (computerPlay === "SCISSORS" && playerPlay === "PAPER")
+    (playerPlay === "ROCK" && computerPlay === "PAPER") ||
+    (playerPlay === "PAPER" && computerPlay === "SCISSORS") ||
+    (playerPlay === "SCISSORS" && computerPlay === "ROCK")
   ) {
-    hintText.textContent = "Computer wins this round!";
     computerScore++;
+    return "Aliens";
   }
 }
 
-function updateScoreBoard() {
-  scoreBoard.textContent = `${playerScore} - ${computerScore}`;
+function updateScore() {
+  playerScoreText.textContent = `${playerScore}`;
+  computerScoreText.textContent = `${computerScore}`;
+}
+
+function playRound(e) {
+  computerSelection = getRandomComputerSelection();
+  playerSelection = getPlayerSelectionEachRound(e);
+
+  let focusedComputerBtn = document.querySelector(
+    `.a-btn[data-selection = "${computerSelection}"]`
+  );
+  let focusedPlayerBtn = document.querySelector(
+    `.h-btn[data-selection = "${playerSelection}"]`
+  );
+
+  focusedPlayerBtn.classList.add("focused");
+  tinkSound.play();
+  focusedComputerBtn.classList.add("focused");
+  
+  // Display Round Winner
+  roundWinner = findRoundWinner(playerSelection, computerSelection);
+  battleFieldText.textContent = `Round Winner: ${roundWinner}`;
+
+  updateScore();
+  getFinalWinner();
+}
+
+function getFinalWinner() {
   if (playerScore === FINAL_SCORE || computerScore === FINAL_SCORE) {
-    playerBtns.forEach((btn) => (btn.disabled = true));
-    btnPlay.textContent = "Restart Game";
-    if (playerScore === computerScore) {
-      hintText.textContent = "Draw Game";
-    } else if (playerScore > computerScore) {
-      hintText.textContent = "Player Wins The Game";
+    playerWeaponBtns.forEach((btn) => (btn.disabled = true));
+    if (playerScore > computerScore) {
+      battleFieldText.textContent = `Whoohoos You defended aliens successfully. The world is all yours.`;
     } else if (playerScore < computerScore) {
-      hintText.textContent = "Computer Wins The Game";
+      battleFieldText.textContent = `Oops!!! Aliens is new world dominators`;
     }
   }
 }
 
-function playRound(e) {
-  btnPlay.textContent = "Restart Game";
-
-  playerSelection = getPlayerSelectionWhenButtonClicked(e);
-  computerSelection = getComputerSelectionAutomatically();
-
-  let focusedPlayerBtn = document.querySelector(
-    `.player-btn[data-selection = "${playerSelection}"]`
-  );
-  let focusedComputerBtn = document.querySelector(
-    `.computer-btn[data-selection = "${computerSelection}"]`
-  );
-
-  // When button clicked, add focused class
-  focusedComputerBtn.classList.add("focused");
-  focusedPlayerBtn.classList.add("focused");
-
-  compareResultsAndCalculateScoreEachRound(playerSelection, computerSelection);
-  updateScoreBoard();
-
-  // When transition end remove focused class
-  playerBtns.forEach((btn) =>
-    btn.addEventListener("transitionend", (e) => {
-      e.target.classList.remove("focused");
-    })
-  );
-  computerBtns.forEach((btn) =>
-    btn.addEventListener("transitionend", (e) => {
-      e.target.classList.remove("focused");
-    })
-  );
-}
-
-function restartGame() {
-  computerScore = 0;
-  playerScore = 0;
-  hintText.textContent = "";
-  updateScoreBoard();
-  playerBtns.forEach((btn) => (btn.disabled = false));
-}
-
-playerBtns.forEach((btn) => btn.addEventListener("click", playRound));
-btnPlay.addEventListener("click", restartGame);
+playerWeaponBtns.forEach((btn) => btn.addEventListener("click", playRound));
+btns.forEach((btn) =>
+  btn.addEventListener("transitionend", removeClassFocused)
+);
