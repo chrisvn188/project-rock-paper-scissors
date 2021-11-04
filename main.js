@@ -1,119 +1,113 @@
-// Author: Chi Anh Bui
-// Created: Oct 28, 2021
-// This program is a game called Rock, Paper and Scissors.
-
-const NUMBER_OF_SHAPES = 3;
-const ROCK = "ROCK";
-const PAPER = "PAPER";
-const SCISSORS = "SCISSORS";
-const DRAW_TEXT = "DRAW";
-const COMPUTER_WINS_TEXT = "COMPUTER WINS";
-const HUMAN_WINS_TEXT = "HUMAN WINS";
-const WRONG_INPUT_TEXT = "WRONG PLAYER INPUT - NOT COUNT";
-
-let humanScore = 0;
+const SHAPES = ["ROCK", "PAPER", "SCISSORS"];
+const FINAL_SCORE = 5;
+let computerSelection = "";
+let playerSelection = "";
 let computerScore = 0;
+let playerScore = 0;
 
-// A FUNCTION TO GET COMPUTER PLAY AUTOMATICALLY
-let getComputerPlay = function () {
-  let randomNumber = Math.floor(Math.random() * NUMBER_OF_SHAPES);
+const btnPlay = document.querySelector(".btn-play");
+const playerBtns = document.querySelectorAll(".player-btn");
+const computerBtns = document.querySelectorAll(".computer-btn");
+const scoreBoard = document.querySelector(".score-display");
+const hintText = document.querySelector(".hint-text");
+const sound = document.querySelector('audio');
+
+function getComputerSelectionAutomatically() {
+  let randomNumber = Math.floor(Math.random() * SHAPES.length);
   switch (randomNumber) {
     case 0:
-      console.log(`Computer choice is ${ROCK}`);
-      return ROCK;
+      return "ROCK";
       break;
     case 1:
-      console.log(`Computer choice is ${PAPER}`);
-      return PAPER;
+      return "PAPER";
       break;
     case 2:
-      console.log(`Computer choice is ${SCISSORS}`);
-      return SCISSORS;
+      return "SCISSORS";
       break;
-    default:
-      return "Something Wrong!";
   }
-};
+}
 
-let getPlayerPlay = function () {
-  let playerChoice = prompt("Enter a choice - rock, paper or scissors: ");
-  if (playerChoice == null || playerChoice == false) {
-    alert(WRONG_INPUT_TEXT);
-  } else if (
-    playerChoice.toUpperCase() !== ROCK &&
-    playerChoice.toUpperCase() !== PAPER &&
-    playerChoice.toUpperCase() !== SCISSORS
-  ) {
-    alert(WRONG_INPUT_TEXT);
-  } else if (
-    playerChoice.toUpperCase() === ROCK ||
-    playerChoice.toUpperCase() === PAPER ||
-    playerChoice.toUpperCase() === SCISSORS
-  ) {
-    console.log(`Player choice is ${playerChoice.toUpperCase()}`);
-    return playerChoice.toUpperCase();
-  }
-};
-// A FUNCTION TO COMPARE RESULTS EACH ROUND OF THE GAME
-let getResults = function (playerChoice, computerChoice) {
-  let playerPlay = playerChoice();
-  let computerPlay = computerChoice();
+function getPlayerSelectionWhenButtonClicked(e) {
+  sound.play();
+  return e.target.getAttribute("data-selection");
+}
 
+function compareResultsAndCalculateScoreEachRound(playerPlay, computerPlay) {
   if (playerPlay === computerPlay) {
-    return DRAW_TEXT;
+    hintText.textContent = "It's a tie!";
+    return;
   } else if (
-    (playerPlay === ROCK && computerPlay === PAPER) ||
-    (playerPlay === PAPER && computerPlay === SCISSORS) ||
-    (playerPlay === SCISSORS && computerPlay === ROCK)
+    (playerPlay === "ROCK" && computerPlay === "SCISSORS") ||
+    (playerPlay === "PAPER" && computerPlay === "ROCK") ||
+    (playerPlay === "SCISSORS" && computerPlay === "PAPER")
   ) {
-    return COMPUTER_WINS_TEXT;
+    hintText.textContent = "You wins this round!";
+    playerScore++;
   } else if (
-    (playerPlay === ROCK && computerPlay === SCISSORS) ||
-    (playerPlay === PAPER && computerPlay === ROCK) ||
-    (playerPlay === SCISSORS && computerPlay === PAPER)
+    (computerPlay === "ROCK" && playerPlay === "SCISSORS") ||
+    (computerPlay === "PAPER" && playerPlay === "ROCK") ||
+    (computerPlay === "SCISSORS" && playerPlay === "PAPER")
   ) {
-    return HUMAN_WINS_TEXT;
-  } else return WRONG_INPUT_TEXT;
-};
-
-// A FUNCTION TO CALCULATE SCORES AFTER COMPARING RESULTS
-let calcScore = function (results) {
-  if (results === WRONG_INPUT_TEXT) {
-    console.log(WRONG_INPUT_TEXT);
-  } else if (results === COMPUTER_WINS_TEXT) {
+    hintText.textContent = "Computer wins this round!";
     computerScore++;
-  } else if (results === HUMAN_WINS_TEXT) {
-    humanScore++;
   }
-};
+}
 
-let game = function (getResults, calcScore) {
-  console.log(`--------------------- START ROUND ---------------------`);
-  let result = getResults(getPlayerPlay, getComputerPlay);
-  calcScore(result);
-  console.log(
-    `Player's score is ${humanScore} and ${computerScore} for computer.`
+function updateScoreBoard() {
+  scoreBoard.textContent = `${playerScore} - ${computerScore}`;
+  if (playerScore === FINAL_SCORE || computerScore === FINAL_SCORE) {
+    playerBtns.forEach((btn) => (btn.disabled = true));
+    btnPlay.textContent = "Restart Game";
+    if (playerScore === computerScore) {
+      hintText.textContent = "Final: Draw";
+    } else if (playerScore > computerScore) {
+      hintText.textContent = "Final: Player Wins";
+    } else if (playerScore < computerScore) {
+      hintText.textContent = "Final: Computer Wins";
+    }
+  }
+}
+
+function playRound(e) {
+  btnPlay.textContent = "Restart Game";
+
+  playerSelection = getPlayerSelectionWhenButtonClicked(e);
+  computerSelection = getComputerSelectionAutomatically();
+
+  let focusedPlayerBtn = document.querySelector(
+    `.player-btn[data-selection = "${playerSelection}"]`
   );
-  console.log(`--------------------- END ROUND ---------------------`);
-};
+  let focusedComputerBtn = document.querySelector(
+    `.computer-btn[data-selection = "${computerSelection}"]`
+  );
 
-let showWinner = function (humanScore, computerScore) {
-  console.log(`--------------------- FINAL RESULT -------------------`);
-  if (humanScore < computerScore) {
-    console.log(COMPUTER_WINS_TEXT);
-  } else if (humanScore > computerScore) {
-    console.log(HUMAN_WINS_TEXT);
-  } else console.log(`Human and computer ${DRAW_TEXT}`);
-};
+  // When button clicked, add focused class
+  focusedComputerBtn.classList.add("focused");
+  focusedPlayerBtn.classList.add("focused");
 
-let playGame = function () {
-  game(getResults, calcScore);
-  game(getResults, calcScore);
-  game(getResults, calcScore);
-  game(getResults, calcScore);
-  game(getResults, calcScore);
-  showWinner(humanScore, computerScore);
-};
+  compareResultsAndCalculateScoreEachRound(playerSelection, computerSelection);
+  updateScoreBoard();
 
-// CALL THE PLAY GAME FUNCTION
-playGame();
+  // When transition end remove focused class
+  playerBtns.forEach((btn) =>
+    btn.addEventListener("transitionend", (e) => {
+      e.target.classList.remove("focused");
+    })
+  );
+  computerBtns.forEach((btn) =>
+    btn.addEventListener("transitionend", (e) => {
+      e.target.classList.remove("focused");
+    })
+  );
+}
+
+function restartGame() {
+  computerScore = 0;
+  playerScore = 0;
+  hintText.textContent = "";
+  updateScoreBoard();
+  playerBtns.forEach((btn) => (btn.disabled = false));
+}
+
+playerBtns.forEach((btn) => btn.addEventListener("click", playRound));
+btnPlay.addEventListener("click", restartGame);

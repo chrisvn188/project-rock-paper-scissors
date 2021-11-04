@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Permanent+Marker&display=swap");
+
+:root {
+  --main-bg-cl: #202020;
+  --main-text-cl: #fff;
+  --color-green: #9bf27c;
+  --color-gray: #c5c5c5;
+  --color-dark-gray: #9a9483;
+  --btn-bg-cl: #c4c4c4;
+  --main-i-cl: #242424;
+  --focused-btn-cl: #f8f389;
+
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-family: "Permanent Marker", cursive;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-color: var(--main-bg-cl);
+  color: var(--main-text-cl);
+  display: flex;
+  flex-direction: column;
+}
+
+.header > h1 {
+  text-align: center;
+  font-size: 2rem;
+  border-bottom: 1px solid var(--color-green);
+  margin: 0;
+  padding: 0.5em 0;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.main > section {
+  flex: 1;
+  padding: 1em;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main > .score-area {
+  flex: 3;
+}
+
+section > h2 {
+  margin: 0;
+}
+
+.score-text {
+  color: var(--color-green);
+}
+
+.btn {
+  width: 8em;
+  height: 8em;
+  border: 1px solid var(--color-green);
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: var(--btn-bg-cl);
+  transition: all 1s;
+}
+
+.focused {
+  background-color: var(--focused-btn-cl);
+}
+
+.btn > i {
+  font-size: 4rem;
+  color: var(--main-bg-cl);
+  pointer-events: none;
+}
+
+.btn:disabled > i {
+  color: var(--color-dark-gray);
+}
+
+.score-display {
+  font-size: 5rem;
+}
+
+.hint-text {
+  font-family: sans-serif;
+  color: var(--color-gray);
+  font-style: italic;
+}
+
+.btn-play {
+  background-color: var(--color-green);
+  font-size: 1.5rem;
+  border: none;
+  padding: 0.5em 1.5em;
+  border-radius: 3px;
+  font-family: inherit;
+}
+
+.footer {
+  text-align: center;
+  padding: 1em 0;
+  font-family: serif;
+  color: var(--color-gray);
+}
