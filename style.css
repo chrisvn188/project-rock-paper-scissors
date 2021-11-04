@@ -84,6 +84,7 @@ section > h2 {
 
 .focused {
   background-color: var(--focused-btn-cl);
+  transform: scale(1.15);
 }
 
 .btn > i {
@@ -113,6 +114,10 @@ section > h2 {
   padding: 0.5em 1.5em;
   border-radius: 3px;
   font-family: inherit;
+}
+.btn-play:active{
+  background-color: var(--focused-btn-cl);
+  transform: translateY(-2px);
 }
 
 .footer {

@@ -59,11 +59,11 @@ function updateScoreBoard() {
     playerBtns.forEach((btn) => (btn.disabled = true));
     btnPlay.textContent = "Restart Game";
     if (playerScore === computerScore) {
-      hintText.textContent = "Final: Draw";
+      hintText.textContent = "Draw Game";
     } else if (playerScore > computerScore) {
-      hintText.textContent = "Final: Player Wins";
+      hintText.textContent = "Player Wins The Game";
     } else if (playerScore < computerScore) {
-      hintText.textContent = "Final: Computer Wins";
+      hintText.textContent = "Computer Wins The Game";
     }
   }
 }
